@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Agenda Semanal de Esaúl 2026 - Marketing General</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg:#0a0e1a;
+    --bg-2:#111827;
+    --card:#151b2d;
+    --card-2:#1b2238;
+    --accent:#22d3ee;
+    --accent-2:#f59e0b;
+    --accent-3:#a855f7;
+    --green:#10b981;
+    --red:#ef4444;
+    --text:#e5e7eb;
+    --muted:#94a3b8;
+    --border:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:radial-gradient(ellipse at top,#1e293b 0%,var(--bg) 50%,#020617 100%);
+    color:var(--text);
+    min-height:100vh;
+    padding:32px 20px;
+    line-height:1.6;
+  }
+  .container{max-width:1280px;margin:0 auto}
+
+  /* Header */
+  .header{
+    background:linear-gradient(135deg,#1e1b4b 0%,#0f172a 50%,#0c4a6e 100%);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:36px 40px;
+    margin-bottom:32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .header::before{
+    content:'';
+    position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 20%,rgba(34,211,238,.15),transparent 50%);
+    pointer-events:none;
+  }
+  .header h1{
+    font-size:2.2rem;
+    font-weight:800;
+    background:linear-gradient(90deg,#22d3ee,#a855f7,#f59e0b);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    letter-spacing:-.02em;
+    margin-bottom:8px;
+  }
+  .header .sub{
+    color:var(--muted);
+    font-size:1rem;
+    font-weight:500;
+  }
+  .header .range{
+    display:inline-block;
+    margin-top:14px;
+    padding:6px 14px;
+    background:rgba(34,211,238,.1);
+    border:1px solid rgba(34,211,238,.3);
+    border-radius:99px;
+    color:var(--accent);
+    font-size:.85rem;
+    font-weight:600;
+  }
+
+  /* Day cards */
+  .day{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    margin-bottom:24px;
+    overflow:hidden;
+    transition:transform .2s;
+  }
+  .day:hover{transform:translateY(-2px)}
+  .day.today{
+    border:1px solid rgba(245,158,11,.5);
+    box-shadow:0 0 40px rgba(245,158,11,.12);
+  }
+  .day-header{
+    padding:20px 28px;
+    background:linear-gradient(90deg,rgba(34,211,238,.08),transparent);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .day-header h2{
+    font-size:1.4rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .day-header .date{
+    color:var(--muted);
+    font-size:.9rem;
+    font-weight:500;
+  }
+  .today-badge{
+    background:var(--accent-2);
+    color:#0a0e1a;
+    font-size:.75rem;
+    font-weight:800;
+    padding:4px 10px;
+    border-radius:99px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  .day-body{padding:28px}
+
+  /* Timeline */
+  .timeline{
+    position:relative;
+    padding-left:28px;
+    margin-bottom:28px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:8px;top:6px;bottom:6px;
+    width:2px;
+    background:linear-gradient(180deg,var(--accent),var(--accent-3),transparent);
+  }
+  .slot{
+    position:relative;
+    margin-bottom:18px;
+    padding:14px 18px;
+    background:var(--card-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    border-left:3px solid var(--accent);
+  }
+  .slot::before{
+    content:'';
+    position:absolute;
+    left:-27px;top:20px;
+    width:14px;height:14px;
+    background:var(--accent);
+    border:3px solid var(--bg);
+    border-radius:50%;
+    box-shadow:0 0 0 3px rgba(34,211,238,.2);
+  }
+  .slot.content{border-left-color:var(--red)}
+  .slot.content::before{background:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,.2)}
+  .slot.upload{border-left-color:var(--accent-3)}
+  .slot.upload::before{background:var(--accent-3);box-shadow:0 0 0 3px rgba(168,85,247,.2)}
+  .slot.community{border-left-color:var(--green)}
+  .slot.community::before{background:var(--green);box-shadow:0 0 0 3px rgba(16,185,129,.2)}
+  .slot.rest{border-left-color:var(--muted);opacity:.65}
+  .slot.rest::before{background:var(--muted)}
+
+  .slot-time{
+    display:inline-block;
+    font-weight:700;
+    color:var(--accent);
+    font-size:.9rem;
+    letter-spacing:.02em;
+  }
+  .slot.content .slot-time{color:#fca5a5}
+  .slot.upload .slot-time{color:#c4b5fd}
+  .slot.community .slot-time{color:#6ee7b7}
+  .slot-title{
+    font-size:1.05rem;
+    font-weight:600;
+    color:#fff;
+    margin-top:3px;
+  }
+  .slot-desc{
+    font-size:.88rem;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* Strategy block */
+  .block{
+    background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(245,158,11,.06));
+    border:1px solid rgba(245,158,11,.25);
+    border-radius:14px;
+    padding:22px 26px;
+    margin-top:18px;
+  }
+  .block.prod{
+    background:linear-gradient(135deg,rgba(16,185,129,.08),rgba(34,211,238,.06));
+    border-color:rgba(34,211,238,.25);
+  }
+  .block h3{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:1.05rem;
+    color:var(--accent-2);
+    font-weight:700;
+    margin-bottom:14px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+  .block.prod h3{color:var(--accent)}
+  .block h4{
+    color:#fff;
+    font-size:.95rem;
+    margin:14px 0 8px;
+    font-weight:600;
+  }
+  .block ul{list-style:none;padding:0}
+  .block li{
+    position:relative;
+    padding:8px 0 8px 24px;
+    color:var(--text);
+    font-size:.92rem;
+    border-bottom:1px dashed rgba(255,255,255,.05);
+  }
+  .block li:last-child{border-bottom:none}
+  .block li::before{
+    content:'▸';
+    position:absolute;
+    left:0;top:8px;
+    color:var(--accent-2);
+    font-weight:700;
+  }
+  .block.prod li::before{content:'⚡';color:var(--accent)}
+  .block li strong{color:#fff}
+  .hook-tag{
+    display:inline-block;
+    background:rgba(245,158,11,.15);
+    color:var(--accent-2);
+    padding:2px 8px;
+    border-radius:6px;
+    font-size:.78rem;
+    font-weight:600;
+    margin-right:6px;
+  }
+
+  /* Footer */
+  .footer{
+    text-align:center;
+    padding:24px;
+    color:var(--muted);
+    font-size:.85rem;
+    border-top:1px solid var(--border);
+    margin-top:32px;
+  }
+  .footer strong{color:var(--accent)}
+  @media(max-width:640px){
+    .header h1{font-size:1.6rem}
+    .day-body{padding:20px}
+    .block{padding:16px 18px}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="header">
+    <h1>🎯 Agenda Semanal de Esaúl 2026 — Marketing General</h1>
+    <p class="sub">Consola estratégica · Foco en rentabilidad, ofertas irresistibles y crecimiento del ecosistema.</p>
+    <span class="range">📅 Sábado 18 Abr → Sábado 25 Abr 2026</span>
+  </header>
+
+  <!-- ========== SÁBADO 18 — HOY ========== -->
+  <section class="day today">
+    <div class="day-header">
+      <div>
+        <h2>Sábado</h2>
+        <div class="date">18 de abril, 2026</div>
+      </div>
+      <span class="today-badge">● Hoy</span>
+    </div>
+    <div class="day-body">
+
+      <div class="timeline">
+        <div class="slot">
+          <span class="slot-time">06:00 AM</span>
+          <div class="slot-title">⚡ Inicio de jornada — Arranca el motor</div>
+          <div class="slot-desc">Primera hora del día: sin reuniones, sin redes. Revisar prioridades del día, preparar entorno de trabajo y entrar en modo deep work.</div>
+        </div>
+        <div class="slot content">
+          <span class="slot-time">08:00 — 10:00 AM</span>
+          <div class="slot-title">🎬 Creación de contenido</div>
+          <div class="slot-desc">Guion + grabación. Deep work, modo avión. Gancho en los primeros 3 segundos.</div>
+        </div>
+        <div class="slot upload">
+          <span class="slot-time">10:00 — 12:00 PM</span>
+          <div class="slot-title">📤 Subir videos en oficina</div>
+          <div class="slot-desc">Optimización SEO: título, miniatura A/B, descripción, tags, end screen.</div>
+        </div>
+        <div class="slot community">
+          <span class="slot-time">12:00 — 1:30 PM</span>
+          <div class="slot-title">🤝 Compartir recursos en la comunidad</div>
+          <div class="slot-desc">Dar primero (recurso). Pedir después (feedback). Sembrar oferta sin venderla.</div>
+        </div>
+        <div class="slot rest">
+          <span class="slot-time">3:00 — 5:30 PM</span>
+          <div class="slot-title">😴 Descanso del día</div>
+          <div class="slot-desc">Bloque protegido de recuperación. Nada de pantallas, nada de trabajo. El rendimiento nocturno depende de este bloque.</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>🎯 Recomendaciones estratégicas — YouTube</h3>
+
+        <h4>3 Ganchos (Hooks) para arrancar el video</h4>
+        <ul>
+          <li><span class="hook-tag">CONTRADICCIÓN</span> <strong>"Lo que te están diciendo sobre [tema] está matando tu negocio — y hoy te voy a demostrar por qué."</strong></li>
+          <li><span class="hook-tag">AUTORIDAD + PROMESA</span> <strong>"En los próximos 4 minutos te voy a entregar el sistema que a mí me tomó 2 años armar. Si lo aplicas esta semana, vas a ver el cambio."</strong></li>
+          <li><span class="hook-tag">CURIOSIDAD + PÉRDIDA</span> <strong>"El 90% de los creadores está dejando dinero sobre la mesa por un error que se arregla en 30 segundos. Mira."</strong></li>
+        </ul>
+
+        <h4>3 Títulos magnéticos (alto CTR)</h4>
+        <ul>
+          <li>"Hice ESTO por 30 días y mi [métrica] se disparó (sin anuncios)"</li>
+          <li>"El error #1 que te cuesta clientes (y nadie te lo dice)"</li>
+          <li>"Cómo vendí [oferta] en 7 días con 0 audiencia"</li>
+        </ul>
+
+        <h4>Estrategia para encontrar temas virales</h4>
+        <ul>
+          <li><strong>VidIQ / TubeBuddy:</strong> filtra videos de tu nicho con &lt;30 días, &gt;100K vistas y canales con &lt;50K subs. Ese es tu mapa de ofertas virales.</li>
+          <li><strong>Reddit + YouTube Search:</strong> busca "how do I..." / "nadie me dice..." en subreddits de tu nicho. Cada queja = un título.</li>
+          <li><strong>Answer the Public + Google Trends:</strong> cruza preguntas crecientes con búsquedas trending. Si sube 90 días seguidos, es una ola que vale cabalgar.</li>
+        </ul>
+      </div>
+
+      <div class="block prod">
+        <h3>⚡ Hacks de productividad para HOY</h3>
+        <ul>
+          <li><strong>Regla 90/0:</strong> 90 minutos de grabación SIN tocar el celular. Déjalo fuera del cuarto. La dopamina del scroll te mata el tono frente a cámara.</li>
+          <li><strong>Batch de 3 tomas por línea:</strong> no intentes el take perfecto. Graba 3 versiones seguidas, elige en edición. Multiplicas output ×3 sin gastar energía en perfeccionismo.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== DOMINGO 19 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Domingo</h2><div class="date">19 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — pendiente de confirmación</div>
+          <div class="slot-desc">Mándame tus bloques y lo agendo. Sugerencia: bloque de planeación semanal + revisión de métricas.</div>
+        </div>
+      </div>
+      <div class="block prod">
+        <h3>⚡ Sugerencia estratégica</h3>
+        <ul>
+          <li><strong>Weekly Review (45 min):</strong> revisa retención del video subido ayer, CTR de miniatura, top 3 comentarios. Los datos de las primeras 24h deciden la próxima grabación.</li>
+          <li><strong>Planeación en frío:</strong> define los 3 entregables no-negociables de la semana. Si no caben en el calendario, no existen.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LUNES 20 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Lunes</h2><div class="date">20 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — pendiente de tus bloques</div>
+          <div class="slot-desc">Pásame las tareas y las distribuyo desde las 8:00 AM.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MARTES 21 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Martes</h2><div class="date">21 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — pendiente de tus bloques</div>
+          <div class="slot-desc">Pásame las tareas y las distribuyo desde las 8:00 AM.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MIÉRCOLES 22 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Miércoles</h2><div class="date">22 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — pendiente de tus bloques</div>
+          <div class="slot-desc">Pásame las tareas y las distribuyo desde las 8:00 AM.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== JUEVES 23 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Jueves</h2><div class="date">23 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — pendiente de tus bloques</div>
+          <div class="slot-desc">Pásame las tareas y las distribuyo desde las 8:00 AM.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIERNES 24 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Viernes</h2><div class="date">24 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — pendiente de tus bloques</div>
+          <div class="slot-desc">Pásame las tareas y las distribuyo desde las 8:00 AM.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SÁBADO 25 ========== -->
+  <section class="day">
+    <div class="day-header">
+      <div><h2>Sábado</h2><div class="date">25 de abril, 2026</div></div>
+    </div>
+    <div class="day-body">
+      <div class="timeline">
+        <div class="slot rest">
+          <span class="slot-time">—</span>
+          <div class="slot-title">📋 Día abierto — cierre de semana</div>
+          <div class="slot-desc">Sugerido: revisión de cash, KPIs y preparación de la próxima semana.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Consola generada · <strong>Agenda Semanal Esaúl 2026</strong> · Actualizada el 18/04/2026</p>
+    <p style="margin-top:8px">Rentabilidad · Ofertas irresistibles · Crecimiento del ecosistema</p>
+  </footer>
+
+</div>
+</body>
+</html>
